@@ -45,7 +45,7 @@ const App = () => {
   const repositoriesInfo = data?.search.edges;
   const pageInfo = data?.search.pageInfo;
   return (
-    <div>
+    <div data-testid="hoge">
       <ul>
         {repositoriesInfo?.map((repository: any) => {
           const { name } = repository.node;
