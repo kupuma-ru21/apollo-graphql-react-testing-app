@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useCallback } from 'react';
+import { useRepositoriesQuery } from './graphql/generate';
+export const PER_PAGE = 5;
+export const VARIABLES = {
+  first: 5,
+  after: null,
+  last: null,
+  before: null,
+  query: 'apollo graphql test',
+};
 
-function App() {
+const App = () => {
+  const { data, loading, error, fetchMore } = useRepositoriesQuery({
+    variables: VARIABLES,
+  });
+  const nextPage = useCallback(
+    (pageInfo) => {
+      fetchMore({
+        variables: {
+          first: 5,
+          after: pageInfo.endCursor,
+          last: null,
+          before: null,
+        },
+      });
+    },
+    [fetchMore]
+  );
+  const prevPage = useCallback(
+    (pageInfo) => {
+      fetchMore({
+        variables: {
+          first: null,
+          after: null,
+          last: 5,
+          before: pageInfo.startCursor,
+        },
+      });
+    },
+    [fetchMore]
+  );
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+  const repositoriesInfo = data?.search.edges;
+  const pageInfo = data?.search.pageInfo;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>
+        {repositoriesInfo?.map((repository: any) => {
+          const { name } = repository.node;
+          return <li key={name}>{name}</li>;
+        })}
+      </ul>
+      {pageInfo?.hasPreviousPage && (
+        <button onClick={() => prevPage(pageInfo)}>prevPage</button>
+      )}
+      {pageInfo?.hasNextPage && (
+        <button onClick={() => nextPage(pageInfo)}>nextPage</button>
+      )}
     </div>
   );
-}
+};
 
 export default App;
