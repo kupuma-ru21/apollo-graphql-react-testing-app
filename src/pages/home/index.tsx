@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useRepositoriesQuery } from './graphql/generate';
+import { useRepositoriesQuery } from '../../graphql/generate';
 export const PER_PAGE = 5;
 export const VARIABLES = {
   first: 5,
@@ -9,7 +9,7 @@ export const VARIABLES = {
   query: 'apollo graphql test',
 };
 
-const App = () => {
+const Home = () => {
   const { data, loading, error, fetchMore } = useRepositoriesQuery({
     variables: VARIABLES,
   });
@@ -62,4 +62,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;

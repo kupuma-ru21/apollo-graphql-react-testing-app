@@ -2,11 +2,11 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './client';
 import './index.css';
-import App from './App';
+import Home from './pages/home';
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Home />
   </ApolloProvider>,
   document.getElementById('root')
 );

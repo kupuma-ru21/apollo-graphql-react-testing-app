@@ -1,5 +1,4 @@
-// 省略
-import App from '../App';
+import Home from '../pages/home';
 import { RepositoriesDocument } from '../graphql/generate';
 import { wrapMockedProvider } from './wrapMockedProvider';
 
@@ -35,10 +34,10 @@ const mock = {
   },
 };
 
-const testRender = () => wrapMockedProvider({ ui: <App />, mocks: [mock] });
+const testRender = () => wrapMockedProvider({ ui: <Home />, mocks: [mock] });
 
-describe('App', () => {
-  test('App test', async () => {
+describe('Home', () => {
+  test('Home test', async () => {
     const { findByTestId } = testRender();
     const targetTestId = await findByTestId('hoge');
     expect(targetTestId).not.toBe(null);
