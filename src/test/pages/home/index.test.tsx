@@ -1,6 +1,6 @@
-import Home from '../pages/home';
-import { RepositoriesDocument } from '../graphql/generate';
-import { wrapMockedProvider } from './wrapMockedProvider';
+import Home from 'pages/home';
+import { RepositoriesDocument } from 'graphql/generate';
+import { wrapMockedProvider } from 'test/wrapMockedProvider';
 
 const mock = {
   request: {
